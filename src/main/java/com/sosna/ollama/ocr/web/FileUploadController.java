@@ -67,15 +67,11 @@ public class FileUploadController {
 	public String handleFileUpload(@RequestParam("file") MultipartFile file, Model model )
 			throws IOException {
 
-		var path = storageService.store(file);
-		var answ = artificialIntelligenceModel.ask("ocr",path, file);
-//		model.addAttribute("answer", answ);
+		storageService.store(file);
+		var answ = artificialIntelligenceModel.ask("ocr", file);
 		model.addAttribute("answer", answ);
-//		model.addFlashAttribute("message",
-//				"You successfully uploaded " + file.getOriginalFilename() + "!");
 
 		return "view";
-		//return "uploadForm"
 	}
 
 	@ExceptionHandler(StorageFileNotFoundException.class)
